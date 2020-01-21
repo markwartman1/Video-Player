@@ -1,0 +1,10 @@
+<p>video-detail works!</p>
+
+<div class="card" style="margin-top: 125px;" *ngIf="video != null">
+    <div class="card-header">{{ video.title }}</div>
+    <div class="card-body">{{ video.description }}</div>
+</div>
+
+<div *ngIf="video == null" style="margin-top: 125px;">
+    <p>Select a Video from the list.</p>
+</div>

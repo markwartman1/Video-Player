@@ -1,0 +1,9 @@
+<p>video-list works!</p>
+
+<div class="card" 
+    *ngFor="let video of videos; let i = index;" 
+    (click)="onSelectDetail(i)" 
+    style="cursor: pointer;">
+    <div class="card-header">{{ video.title }}</div>
+    <div class="card-body">{{ video.description }}</div>
+</div>
