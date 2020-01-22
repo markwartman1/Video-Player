@@ -10,6 +10,7 @@ import { VideoService } from '../services/video.service';
 export class VideoDetailComponent implements OnInit {
 
   video: Video;
+  update: boolean = false;
 
   constructor( private videoService: VideoService ) { }
 
@@ -18,6 +19,22 @@ export class VideoDetailComponent implements OnInit {
     this.videoService.observed_videos.subscribe(() => {
       this.video = this.videoService.getDispVid();
     });
+  }
+
+  updateOrSave() {
+    this.update = !this.update;
+
+    if(!this.update){
+      // update in service ????
+    }
+  }
+
+  onAddNewVideo() {
+    this.video = {
+      title: "",
+      url: "",
+      description: ""
+    }
   }
 
 }

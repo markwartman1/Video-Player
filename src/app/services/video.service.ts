@@ -13,7 +13,7 @@ export class VideoService {
     //     { title: 'Title 3', url: 'poiupoiu', description: 'Title 3 content here...' },
     // ];
     private selectedVideoIndex: number;
-    //private _getUrl = "http:/localhost:3000/api/videos";
+    _getUrl = "http://localhost:3000/videos";
 
     constructor( private http: HttpClient ) {}
 
@@ -27,7 +27,7 @@ export class VideoService {
         return this.videos[this.selectedVideoIndex];
     }
     getVideos() {
-        return this.http.get<Video[]>('http://localhost:3000/videos').subscribe((res) => {
+        return this.http.get<Video[]>(this._getUrl).subscribe((res) => {
             this.videos = res;
             this.observed_videos.next(this.videos);
         });
