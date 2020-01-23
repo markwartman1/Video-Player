@@ -57,6 +57,7 @@ router.get('/videos/:id', function(req, res) {
 router.post('/video', function(req, res) {
     console.log('Post a video');
     const newVideo = new Video;
+    newVideo._id = null;
     newVideo.title = req.body.title;
     newVideo.url = req.body.url;
     newVideo.description = req.body.description;
@@ -64,6 +65,7 @@ router.post('/video', function(req, res) {
         if (err) {
             console.log('Error: Failure to Post Video: ' + err);
         } else {
+            newVideo._id = insertedVideo._id;
             res.json(insertedVideo);
         }
     });
@@ -89,7 +91,8 @@ router.put('/video/:id', function(req, res) {
 
 router.delete('/video/:id', function(req, res){
     console.log('Deleting Video');
-    Video.findByIdAndRemove(req.params.id, function(err, deletedVideo){
+    // findByIdAndRemove
+    Video.findOneAndDelete(req.params.id, function(err, deletedVideo){
         if (err) {
             console.log('Failed to Delete');
         } else {

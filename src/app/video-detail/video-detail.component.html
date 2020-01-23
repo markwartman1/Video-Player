@@ -1,11 +1,13 @@
 <p>video-detail works!</p>
 
-<div *ngIf="video != null && !update">
+<button [hidden]="update" (click)="onAddNewVideo()" class="btn btn-primary float-right mb-1">+ New Video</button>
+
+<div *ngIf="video != null && !update && video.url != null">
     <iframe [src]="video.url | safe" frameborder="0" height="300" width="100%"
     allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-<form>
+<form #form="ngForm" (ngSubmit)="onSubmitVideo(form.value)">
     <div class="card" *ngIf="video != null">
         <div *ngIf="!update" class="card-header">{{ video.title }}</div>
         <div *ngIf="update" class="form-group mx-3 mt-3">
@@ -13,7 +15,8 @@
                 type="input" 
                 class="form-control" 
                 name="title" 
-                required placeholder="title"
+                required 
+                placeholder="title"
                 [(ngModel)]="video.title"
             >
         </div>
@@ -30,14 +33,18 @@
         </div>
         <div *ngIf="!update" class="card-body">{{ video.description }}</div>
         <div *ngIf="update" class="form-group mx-3">
-            <textarea type="input" class="form-control" rows="5" name="desc" placeholder="Put description here..." [(ngModel)]="video.description"></textarea>
+            <textarea type="input" class="form-control" rows="5" name="description" placeholder="Put description here..." [(ngModel)]="video.description"></textarea>
         </div>
         <div class="form-group mx-3">
-            <button class="btn btn-sm btn-outline-warning" (click)="updateOrSave()">UPDATE</button>
+            <button type="button" class="btn btn-sm btn-outline-warning" 
+                (click)="updateOrSave()">{{ btnName }}</button>
+            <button *ngIf="update" type="submit" class="btn btn-sm btn-outline-success ml-3">SAVE</button>
+            <button *ngIf="update" type="button" class="btn btn-sm btn-outline-danger ml-3"
+                (click)="onDelete(video)">DELETE</button>
         </div>
     </div>
     
-    <div *ngIf="video == null" style="margin-top: 125px;">
-        <p>Select a Video from the list.</p>
+    <div style="margin-top: 125px;">
+        <p [hidden]="video">Select a Video from the list.</p>
     </div>
 </form>

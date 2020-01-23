@@ -11,6 +11,8 @@ export class VideoDetailComponent implements OnInit {
 
   video: Video;
   update: boolean = false;
+  btnName: string = "UPDATE";
+  isNewVid: boolean;
 
   constructor( private videoService: VideoService ) { }
 
@@ -18,23 +20,46 @@ export class VideoDetailComponent implements OnInit {
 
     this.videoService.observed_videos.subscribe(() => {
       this.video = this.videoService.getDispVid();
+      this.isNewVid = false;
     });
   }
 
   updateOrSave() {
     this.update = !this.update;
-
+    
+    // if it said CANCEL & pressed CANCEL
     if(!this.update){
-      // update in service ????
+      this.btnName = "UPDATE";
+      this.video = null;
+    }else {
+      this.btnName = "CANCEL";
     }
   }
 
   onAddNewVideo() {
     this.video = {
+      _id: "",
       title: "",
       url: "",
       description: ""
     }
+    this.isNewVid = true;
+    this.updateOrSave();
+  }
+
+  onSubmitVideo(video: Video) {
+    if (this.isNewVid) {
+      this.videoService.createVideo(video);
+      this.updateOrSave();
+    } else {
+      this.videoService.updateVideo(video);
+      this.updateOrSave();
+    }
+  }
+
+  onDelete(video: Video) {
+    this.videoService.deleteVideo(video);
+    this.updateOrSave();
   }
 
 }

@@ -13,9 +13,22 @@ export class VideoService {
     //     { title: 'Title 3', url: 'poiupoiu', description: 'Title 3 content here...' },
     // ];
     private selectedVideoIndex: number;
-    _getUrl = "http://localhost:3000/videos";
+    //isExistingVideo: boolean = false;
+    private _getUrl = "http://localhost:3000/videos";
+    private _postUrl = "http://localhost:3000/video";
+    private _deleteUrl = "http://localhost:3000/video/";
+    private _putUrl = "http://localhost:3000/video/";
 
     constructor( private http: HttpClient ) {}
+
+    // CREATE CREATE CREATE CREATE
+    createVideo(video: Video) {
+        this.http.post(this._postUrl, video).subscribe(() => {
+            this.videos.push(video);
+            this.observed_videos.next(this.videos);
+        });
+        
+    }
 
     // READ READ READ READ
     setDispVid(index: number) {
@@ -38,19 +51,28 @@ export class VideoService {
         return this.observed_videos.asObservable();
     }
 
-    // CREATE CREATE CREATE CREATE
-    createVideo(video: Video) {
-        this.videos.push(video);
-    }
 
     // UPDATE UPDATE UPDATE UPDATE
+    updateVideo(video: Video) {
+        this.http.put(this._putUrl + video._id, video).subscribe(() => {
+            for(let i = 0; i < this.videos.length; i++){
+                if(video._id === this.videos[i]._id){
+                    this.videos.splice(i, 1, video);
+                }
+            }
+            this.observed_videos.next(this.videos);
+        });
+    }
 
     // DELETE DELETE DELETE DELETE
     deleteVideo(video: Video) {
         for (let i = 0; i < this.videos.length; i++) {
-            if (video.title.toString == this.videos[i].title.toString) {
+            if (video._id == this.videos[i]._id) {
                 this.videos.splice(i, 1);
             }
         }
+        this.http.delete(this._deleteUrl + video._id).subscribe(() => {
+            this.observed_videos.next(this.videos);
+        });
     }
 }
