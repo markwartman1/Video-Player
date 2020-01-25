@@ -72,22 +72,40 @@ router.post('/video', function(req, res) {
 });
 
 router.put('/video/:id', function(req, res) {
-    console.log('Updated Video');
-    Video.findByIdAndUpdate(req.params.id,
-        {
-            $set: {
-                title: req.body.title,
-                url: req.body.url,
-                description: req.body.description
-            }
-        }, {new: true}, function(err, updatedVideo) {
+    console.log('Put Request running in api');
+    console.log(req.body.id);
+    const video = new Video({
+        _id: req.body._id,
+        title: req.body.title,
+        url: req.body.url,
+        description: req.body.description
+    });
+    Video.updateOne(_id, video).then(
+
+        function(err, updatedVideo) {
         if (err) {
             console.log('Failed Update');
         } else {
             res.json(updatedVideo);
         }
     });
+
 });
+
+    // Video.findByIdAndUpdate(req.params.id,
+    //     {
+    //         $set: {
+    //             title: req.body.title,
+    //             url: req.body.url,
+    //             description: req.body.description
+    //         }
+    //     }, {new: true}, function(err, updatedVideo) {
+    //     if (err) {
+    //         console.log('Failed Update');
+    //     } else {
+    //         res.json(updatedVideo);
+    //     }
+    // });
 
 router.delete('/video/:id', function(req, res){
     console.log('Deleting Video');

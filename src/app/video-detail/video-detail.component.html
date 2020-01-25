@@ -32,6 +32,8 @@
             >
         </div>
         <div *ngIf="!update" class="card-body">{{ video.description }}</div>
+        <div *ngIf="!update" class="card-body" >{{ video._id }}</div>
+       
         <div *ngIf="update" class="form-group mx-3">
             <textarea type="input" class="form-control" rows="5" name="description" placeholder="Put description here..." [(ngModel)]="video.description"></textarea>
         </div>

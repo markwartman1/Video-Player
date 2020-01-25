@@ -12,7 +12,7 @@ export class VideoService {
     //     { title: 'Title 2', url: 'poiupoiu', description: 'Title 2 content here...' },
     //     { title: 'Title 3', url: 'poiupoiu', description: 'Title 3 content here...' },
     // ];
-    private selectedVideoIndex: number;
+    private selectedVideoIndex: number = 0;
     //isExistingVideo: boolean = false;
     private _getUrl = "http://localhost:3000/videos";
     private _postUrl = "http://localhost:3000/video";
@@ -36,7 +36,8 @@ export class VideoService {
         this.observed_videos.next(this.videos);     // comment this out?????
     }
 
-    getDispVid() {
+    getDispVid(): Video {
+        console.log('from service file.getDispVid() id is: ' + this.videos[this.selectedVideoIndex]._id);
         return this.videos[this.selectedVideoIndex];
     }
     getVideos() {
@@ -54,6 +55,8 @@ export class VideoService {
 
     // UPDATE UPDATE UPDATE UPDATE
     updateVideo(video: Video) {
+        console.log("From videoService.updateVideo() title is: " + video.title);
+        console.log("From videoService.updateVideo() id is: " + video._id);
         this.http.put(this._putUrl + video._id, video).subscribe(() => {
             for(let i = 0; i < this.videos.length; i++){
                 if(video._id === this.videos[i]._id){

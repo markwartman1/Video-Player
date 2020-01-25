@@ -13,6 +13,7 @@ export class VideoDetailComponent implements OnInit {
   update: boolean = false;
   btnName: string = "UPDATE";
   isNewVid: boolean;
+  keep_id: string = "";
 
   constructor( private videoService: VideoService ) { }
 
@@ -20,6 +21,8 @@ export class VideoDetailComponent implements OnInit {
 
     this.videoService.observed_videos.subscribe(() => {
       this.video = this.videoService.getDispVid();
+      this.keep_id = this.video._id;
+      console.log('video-detail ngOnInit() id is: ' + this.keep_id);
       this.isNewVid = false;
     });
   }
@@ -30,7 +33,7 @@ export class VideoDetailComponent implements OnInit {
     // if it said CANCEL & pressed CANCEL
     if(!this.update){
       this.btnName = "UPDATE";
-      this.video = null;
+      //this.video = null;                This is was recently changed 1/24 11:11 AM
     }else {
       this.btnName = "CANCEL";
     }
@@ -48,12 +51,17 @@ export class VideoDetailComponent implements OnInit {
   }
 
   onSubmitVideo(video: Video) {
+    
+    
     if (this.isNewVid) {
       this.videoService.createVideo(video);
       this.updateOrSave();
     } else {
+      this.video._id = this.keep_id;
+      console.log("from video-detail onSubmitVideo() component Keep_id is: " + this.keep_id);
+      console.log("from video-detail onSubmitVideo() component id is: " + this.video._id);
       this.videoService.updateVideo(video);
-      this.updateOrSave();
+      //this.updateOrSave();                            uncomment this ....................
     }
   }
 
