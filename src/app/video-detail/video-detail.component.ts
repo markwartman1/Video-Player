@@ -57,9 +57,9 @@ export class VideoDetailComponent implements OnInit {
       this.videoService.createVideo(video);
       this.updateOrSave();
     } else {
-      this.video._id = this.keep_id;
+      video._id = this.keep_id;
       console.log("from video-detail onSubmitVideo() component Keep_id is: " + this.keep_id);
-      console.log("from video-detail onSubmitVideo() component id is: " + this.video._id);
+      console.log("from video-detail onSubmitVideo() component id is: " + video._id);
       this.videoService.updateVideo(video);
       //this.updateOrSave();                            uncomment this ....................
     }

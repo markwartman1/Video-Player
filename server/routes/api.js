@@ -6,7 +6,12 @@ require('dotenv').config()
 
 const router = express();
 
-mongoose.connect(process.env.API_KEY)
+mongoose.connect(process.env.API_KEY, 
+    {
+        useFindAndModify: false,
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
 .then(() => {
         console.log('Connected to database!');
     })
@@ -72,19 +77,31 @@ router.post('/video', function(req, res) {
 });
 
 router.put('/video/:id', function(req, res) {
-    console.log('Put Request running in api');
-    console.log(req.body.id);
+    console.log('Put Request running in api ==');
+    console.log(req.body._id);
+    
+    // Video.findByIdAndUpdate(req.body.id,
+    //     {
+    //         $set: req.body
+    //     }, {new: true}, function(err, updatedVideo) {
+    //     if (err) {
+    //         res.send('Error updating video');
+    //     } else {
+    //         res.json(updatedVideo);
+    //     }
+    // });
     const video = new Video({
         _id: req.body._id,
         title: req.body.title,
         url: req.body.url,
         description: req.body.description
     });
-    Video.updateOne(_id, video).then(
+    
+    Video.updateOne({_id: req.body._id}, video).then(
 
         function(err, updatedVideo) {
         if (err) {
-            console.log('Failed Update');
+            res.json(err);
         } else {
             res.json(updatedVideo);
         }
