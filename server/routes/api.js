@@ -21,7 +21,7 @@ mongoose.connect(process.env.API_KEY,
 );
 
 router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({extended: false}));
+//router.use(bodyParser.urlencoded({extended: false}));
 
 // MY ADDITION  WAS NOT ORIGINALLY HERE
 router.use((req, res, next) => {
@@ -78,33 +78,38 @@ router.post('/video', function(req, res) {
 
 router.put('/video/:id', function(req, res) {
     console.log('Put Request running in api ==');
-    console.log(req.body._id);
-    
-    // Video.findByIdAndUpdate(req.body.id,
+    console.log(req.params.id);
+    console.log(req.body.title);
+    // Video.findByIdAndUpdate({_id: req.params.id}, 
     //     {
-    //         $set: req.body
-    //     }, {new: true}, function(err, updatedVideo) {
+    //         $set: {
+    //             title: req.body.title,
+    //             url: req.body.url,
+    //             description: req.body.description
+    //         }
+    //     },
+    //      {new: true}, function(err, updatedVideo) {
     //     if (err) {
-    //         res.send('Error updating video');
+    //         res.send('Error updating video' + err);
     //     } else {
     //         res.json(updatedVideo);
     //     }
     // });
     const video = new Video({
-        _id: req.body._id,
+        _id: req.body.id,
         title: req.body.title,
         url: req.body.url,
         description: req.body.description
     });
     
-    Video.updateOne({_id: req.body._id}, video).then(
+    Video.updateOne({_id: req.params.id}, video).then(
 
         function(err, updatedVideo) {
-        if (err) {
-            res.json(err);
-        } else {
-            res.json(updatedVideo);
-        }
+        // if (err) {
+        //     res.json(err);
+        // } else {
+        //     res.json(updatedVideo);
+        // }
     });
 
 });
@@ -125,9 +130,9 @@ router.put('/video/:id', function(req, res) {
     // });
 
 router.delete('/video/:id', function(req, res){
-    console.log('Deleting Video');
+    console.log('Deleting Video' + req.params.id);
     // findByIdAndRemove
-    Video.findOneAndDelete(req.params.id, function(err, deletedVideo){
+    Video.deleteOne({_id: req.params.id}).then((err, deletedVideo) => {
         if (err) {
             console.log('Failed to Delete');
         } else {

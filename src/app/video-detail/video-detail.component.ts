@@ -33,7 +33,7 @@ export class VideoDetailComponent implements OnInit {
     // if it said CANCEL & pressed CANCEL
     if(!this.update){
       this.btnName = "UPDATE";
-      //this.video = null;                This is was recently changed 1/24 11:11 AM
+      this.video = null;                //This is was recently changed 1/24 11:11 AM
     }else {
       this.btnName = "CANCEL";
     }
@@ -61,7 +61,7 @@ export class VideoDetailComponent implements OnInit {
       console.log("from video-detail onSubmitVideo() component Keep_id is: " + this.keep_id);
       console.log("from video-detail onSubmitVideo() component id is: " + video._id);
       this.videoService.updateVideo(video);
-      //this.updateOrSave();                            uncomment this ....................
+      this.updateOrSave();                            //uncomment this ....................
     }
   }
 
