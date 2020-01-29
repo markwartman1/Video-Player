@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, OnDestroy } from '@angular/core';
 import { Video } from "../models/video.model";
 import { VideoService } from "../services/video.service";
 import { Subscription } from 'rxjs';
@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './video-list.component.html',
   styleUrls: ['./video-list.component.css']
 })
-export class VideoListComponent implements OnInit {
+export class VideoListComponent implements OnInit, OnDestroy {
 
   videos: Video[] = [];
   private videoSubscription: Subscription
@@ -22,6 +22,10 @@ export class VideoListComponent implements OnInit {
       .subscribe((vids: Video[]) => {
         this.videos = vids;
       });
+  }
+
+  ngOnDestroy() {
+    this.videoSubscription.unsubscribe();
   }
 
   onSelectDetail(index: number) {

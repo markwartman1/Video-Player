@@ -62,7 +62,7 @@ router.get('/videos/:id', function(req, res) {
 router.post('/video', function(req, res) {
     console.log('Post a video');
     const newVideo = new Video;
-    newVideo._id = null;
+    //newVideo._id = null;
     newVideo.title = req.body.title;
     newVideo.url = req.body.url;
     newVideo.description = req.body.description;
@@ -70,8 +70,9 @@ router.post('/video', function(req, res) {
         if (err) {
             console.log('Error: Failure to Post Video: ' + err);
         } else {
-            newVideo._id = insertedVideo._id;
-            res.json(insertedVideo);
+            //newVideo._id = res._id;
+            console.log('inserVideo._id: ' + insertedVideo._id);
+            res.json({postId: insertedVideo._id});
         }
     });
 });
@@ -96,7 +97,7 @@ router.put('/video/:id', function(req, res) {
     //     }
     // });
     const video = new Video({
-        _id: req.body.id,
+        _id: req.body._id,
         title: req.body.title,
         url: req.body.url,
         description: req.body.description
@@ -130,14 +131,20 @@ router.put('/video/:id', function(req, res) {
     // });
 
 router.delete('/video/:id', function(req, res){
-    console.log('Deleting Video' + req.params.id);
+    console.log('Deleting Video: ' + req.params.id);
     // findByIdAndRemove
-    Video.deleteOne({_id: req.params.id}).then((err, deletedVideo) => {
-        if (err) {
-            console.log('Failed to Delete');
-        } else {
-            res.json(deletedVideo);
-        }
+    Video.deleteOne({_id: req.params.id}).then(something => {
+        // use to be a .catch() above
+        // if (err) {
+        //     console.log('Error to Delete');
+        //     throw error;
+        // } 
+        //else {
+        //     res.json(deletedVideo);
+        // }
+        //console.log(res);
+        console.log('Deleting process ran ??');
+        res.status(200).json({message: 'Post deleted'});
     });
 });
 

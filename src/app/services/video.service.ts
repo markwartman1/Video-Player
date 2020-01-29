@@ -23,7 +23,10 @@ export class VideoService {
 
     // CREATE CREATE CREATE CREATE
     createVideo(video: Video) {
-        this.http.post(this._postUrl, video).subscribe(() => {
+        this.http.post<{postId: string}>(this._postUrl, video).subscribe((objFromMongo) => {
+            video._id = objFromMongo.postId;
+            console.log('objFromMongo.postId: ' + objFromMongo.postId );
+            console.log(objFromMongo);
             this.videos.push(video);
             this.observed_videos.next(this.videos);
         });
@@ -37,7 +40,7 @@ export class VideoService {
     }
 
     getDispVid(): Video {
-        console.log('from service file.getDispVid() id is: ' + this.videos[this.selectedVideoIndex]._id);
+        //console.log('from service file.getDispVid() id is: ' + this.videos[this.selectedVideoIndex]._id);
         return this.videos[this.selectedVideoIndex];
     }
     getVideos() {
@@ -68,13 +71,16 @@ export class VideoService {
     }
 
     // DELETE DELETE DELETE DELETE
-    deleteVideo(video: Video) {
+    deleteVideo(id: string) {
+
         for (let i = 0; i < this.videos.length; i++) {
-            if (video._id == this.videos[i]._id) {
+            if (id == this.videos[i]._id) {
                 this.videos.splice(i, 1);
             }
         }
-        this.http.delete(this._deleteUrl + video._id).subscribe(() => {
+        
+        this.http.delete(this._deleteUrl + id).subscribe(() => {
+            
             this.observed_videos.next(this.videos);
         });
     }

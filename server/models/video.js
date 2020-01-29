@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const videoSchema = new Schema({
-    _id: String,
     title: String,
     url: String,
     description: String

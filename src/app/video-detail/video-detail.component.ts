@@ -65,8 +65,8 @@ export class VideoDetailComponent implements OnInit {
     }
   }
 
-  onDelete(video: Video) {
-    this.videoService.deleteVideo(video);
+  onDelete(id: string) {
+    this.videoService.deleteVideo(id);
     this.updateOrSave();
   }
 

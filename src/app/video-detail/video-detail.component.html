@@ -42,7 +42,7 @@
                 (click)="updateOrSave()">{{ btnName }}</button>
             <button *ngIf="update" type="submit" class="btn btn-sm btn-outline-success ml-3">SAVE</button>
             <button *ngIf="update" type="button" class="btn btn-sm btn-outline-danger ml-3"
-                (click)="onDelete(video)">DELETE</button>
+                (click)="onDelete(video._id)">DELETE</button>
         </div>
     </div>
     
@@ -57,3 +57,4 @@
 <p>Delete does not delete the correct one</p>
 <p>Some will not delete at all</p>
 <p>Post/Create is not grabbing _id like I thought it was</p>
+<p style="margin-bottom: 250px;">Review Video 30: Forms</p>
