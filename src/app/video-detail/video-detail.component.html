@@ -2,13 +2,13 @@
 
 <button [hidden]="update" (click)="onAddNewVideo()" class="btn btn-primary float-right mb-1">+ New Video</button>
 
-<div *ngIf="video != null && !update && video.url != null">
+<div style="margin-top: 65px;" *ngIf="video != null && !update && video.url != null">
     <iframe [src]="video.url | safe" frameborder="0" height="300" width="100%"
     allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-<form #form="ngForm" (ngSubmit)="onSubmitVideo(form.value)">
-    <div class="card" *ngIf="video != null">
+<form ngNativeValidate #form="ngForm" (ngSubmit)="onSubmitVideo(form)">
+    <div class="card mt-2" *ngIf="video != null">
         <div *ngIf="!update" class="card-header">{{ video.title }}</div>
         <div *ngIf="update" class="form-group mx-3 mt-3">
             <input 
@@ -20,13 +20,13 @@
                 [(ngModel)]="video.title"
             >
         </div>
-        <!--   put I-FRAME here   -->
+        <!--   url input   -->
         <div *ngIf="update" class="form-group mx-3">
             <input 
                 type="input" 
                 class="form-control" 
                 name="url" 
-                required 
+                
                 placeholder="url"
                 [(ngModel)]="video.url"
             >
