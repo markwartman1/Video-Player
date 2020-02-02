@@ -1,5 +1,7 @@
 # MeanVidPlayer
 
+This project uses a remote Database for Data persistence.  Therefore to run this project you will have to set up your own remote Database.  In this case I used MongoDB.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.21.
 
 ## Development server
