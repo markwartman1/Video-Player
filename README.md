@@ -1,6 +1,6 @@
 # MeanVidPlayer
 
-This project uses a remote Database for Data persistence.  Therefore to run this project you will have to set up your own remote Database.  In this case I used MongoDB.
+This project uses a remote Database for Data persistence.  Therefore to run this project you will have to set up your own remote Database.  In this case I used MongoDB.  Place the URL string that the database offers inside of a file just like .env_sample; that is how the file api.js will find that data except the file api.js is currently set up to pull from a file called .env and not .env_sample.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.21.
 
